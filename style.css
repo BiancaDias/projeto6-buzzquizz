@@ -198,9 +198,6 @@ button{
 }
 
 @media (max-width: 1100px){
-    body{
-        width: 100%;
-    }
     .pergunta, .nivel, .quiz{
         width: 100% !important;
     }
