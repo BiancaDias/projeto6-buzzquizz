@@ -1,131 +1,125 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BuzzQuizz</title>
-    <link rel="stylesheet" href="reset.css">
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500&display=swap" rel="stylesheet">
-</head>
-<body>
-    <!--este é fixo em todas as telas-->
-    <header>
-        <h1>BuzzQuizz</h1>
-    </header>
-    <!--inicio da primeira tela-->
-    <div class="primeira-tela">
-        <div class="meusQuizzes">
-            <div class="meusQuizzesVazio escondido">
-                <div class="semQuizz">Você não criou nenhum quizz ainda :(</div>
-                <button class="criarQuizz" onclick="criarQuiz()">Criar Quizz</button>
-            </div>
-            <div class="meusQuizzesPreenchido ">
-                <h1>Seus Quizzes <ion-icon name="add-circle-sharp" onclick="criarQuiz()"></ion-icon></h1>
-                <div class="listagemQuizz">
-                    <div class="exibicaoQuizz">
-                        <img src = "https://recreio.uol.com.br/media/uploads/harry_potter/hogwarts_capa_IoGEBAk.jpg" alt="imagemquizz">
-                        <div class="degrade"></div>
-                        <div class="descricaoQuizz">O quanto você é de Hogwarts?</div>
-                    </div>
-                    <div class="exibicaoQuizz">
-                        <img src = "https://gkpb.com.br/wp-content/uploads/2022/12/os-melhores-episodios-natal-os-simpsons-scaled-e1671654344475.jpg" alt="imagemquizz">
-                        <div class="degrade"></div>
-                        <div class="descricaoQuizz">Acerte os personagens corretos dos Simpsons e prove seu amor!</div>
-                    </div>
-                    <div class="exibicaoQuizz">
-                        <img src = "https://recreio.uol.com.br/media/uploads/harry_potter/hogwarts_capa_IoGEBAk.jpg" alt="imagemquizz">
-                        <div class="degrade"></div>
-                        <div class="descricaoQuizz">O quanto você é de Hogwarts?</div>
-                    </div> 
-                    <div class="exibicaoQuizz">
-                        <img src = "https://gkpb.com.br/wp-content/uploads/2022/12/os-melhores-episodios-natal-os-simpsons-scaled-e1671654344475.jpg" alt="imagemquizz">
-                        <div class="degrade"></div>
-                        <div class="descricaoQuizz">Acerte os personagens corretos dos Simpsons e prove seu amor!</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="todosQuizzes">
-            <h1>Todos os Quizzes</h1>
-            <div class="listagemQuizz">
-                <div class="exibicaoQuizz">
-                    <img src = "https://recreio.uol.com.br/media/uploads/harry_potter/hogwarts_capa_IoGEBAk.jpg" alt="imagemquizz">
-                    <div class="degrade"></div>
-                    <div class="descricaoQuizz">O quanto você é de Hogwarts?</div>
-                </div> 
-                <div class="exibicaoQuizz">
-                    <img src = "https://gkpb.com.br/wp-content/uploads/2022/12/os-melhores-episodios-natal-os-simpsons-scaled-e1671654344475.jpg" alt="imagemquizz">
-                    <div class="degrade"></div>
-                    <div class="descricaoQuizz">Acerte os personagens corretos dos Simpsons e prove seu amor!</div>
-                </div>
-                <div class="exibicaoQuizz">
-                    <img src = "https://recreio.uol.com.br/media/uploads/harry_potter/hogwarts_capa_IoGEBAk.jpg" alt="imagemquizz">
-                    <div class="degrade"></div>
-                    <div class="descricaoQuizz">O quanto você é de Hogwarts?</div>
-                </div> 
-                <div class="exibicaoQuizz">
-                    <img src = "https://gkpb.com.br/wp-content/uploads/2022/12/os-melhores-episodios-natal-os-simpsons-scaled-e1671654344475.jpg" alt="imagemquizz">
-                    <div class="degrade"></div>
-                    <div class="descricaoQuizz">Acerte os personagens corretos dos Simpsons e prove seu amor!</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--fim da primeira tela-->
-    <!--inicio da segunda tela-->
-    <div class="segunda-tela escondido">
-        <div class="banner">
-            <h2>titulo</h2>
-            <img src = "https://recreio.uol.com.br/media/uploads/harry_potter/hogwarts_capa_IoGEBAk.jpg" class="portrait">
-            <div class="filtro"></div>
-        </div>
-        <div class="quiz" >
-            <div class="pergunta">
-                <div class="titulo-pergunta">
-                    <h3>Pergunta</h3>
-                </div>
-                <div class="alternativas">
-                    <div class="resposta">
-                        <img src = "https://storage.googleapis.com/dpw/app/uploads/2009/12/como-otimizar-imagens-web-internet1.jpg">
-                        <p>legenda</p>
-                    </div>
-                    <div class="resposta">
-                        <img src = "https://storage.googleapis.com/dpw/app/uploads/2009/12/como-otimizar-imagens-web-internet1.jpg">
-                        <p>legenda</p>
-                    </div>
-                    <div class="resposta">
-                        <img src = "https://storage.googleapis.com/dpw/app/uploads/2009/12/como-otimizar-imagens-web-internet1.jpg">
-                        <p>legenda</p>
-                    </div>
-                    <div class="resposta">
-                        <img src = "https://storage.googleapis.com/dpw/app/uploads/2009/12/como-otimizar-imagens-web-internet1.jpg">
-                        <p>legenda</p>
-                    </div>
-                </div>
-            </div>
-            <div class="nivel">
-                <div class="acerto">
-                    <h3>acertou tantos %</h3>
-                </div>
-                <div class="expli-acertos">
-                    <img src="https://i.ytimg.com/vi/jTx-ZyVHtdU/maxresdefault.jpg">
-                    <p>Parabéns Potterhead! Bem-vindx a Hogwarts, aproveite o loop infinito de comida e clique no botão abaixo para usar o vira-tempo e reiniciar este teste.</p>
-                </div>
-            </div>
-        </div> <!--fim do quiz-->
-        <div class="botoes">
-            <button class = "reiniciar">Reiniciar Quizz</button>
-            <button class = "voltar">Voltar pra home</button>
-        </div>
-    </div>
-    <!--fim da segunda tela-->
+  <head>
+    <link rel="stylesheet" href="reset.css" />
+    <meta charset="UTF-8" />
 
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src = "script.js"></script>
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-</body>
-</html>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css" />
+    <link
+    rel="icon"
+    type="image/png"
+    sizes="32x32"
+    href="./imagens/logo1.jpeg"/>
+
+    <title>
+      Bate Papo UOL
+    </title>
+
+  </head>
+  <body>
+    <div class="telaEntrada largura">
+        <img class="logoEntrada" src="./imagens/logo 2.png" alt="logo">
+        <input class="insereNome" type="text" placeholder="Digite seu nome" data-test="input-name">
+        <button data-test="send-name" onclick="entrarSala()">Entrar</button>
+    </div>
+    <div class="telaParticipantes largura escondido">
+        <section class="fundoEncoberto" data-test="overlay" onclick="escondeParticipantes()"></section>
+        <section class="listaParticipantes">
+            <div class="contato">
+            </div>
+            <div class="visibilidade">
+                <p class="titulo">Escolha a visibilidade</p>
+                <div class="opcao visibOp publico" data-test="public" onclick="selecionaVisibilidade(this)">
+                    <div class="iconeVisibilidade " >
+                        <ion-icon name="lock-open"></ion-icon>
+                    </div>
+                    <p>Público</p>
+                    <div class="iconeCkeck escondido">
+                        <ion-icon name="checkmark-sharp" data-test="check"></ion-icon>
+                    </div>
+                </div>
+                <div class="opcao visibOp " data-test="private" onclick="selecionaVisibilidade(this)">
+                    <div class="iconeVisibilidade ">
+                        <ion-icon name="lock-closed"></ion-icon>
+                    </div>
+                    <p>Reservadamente</p>
+                    <div class="iconeCkeck escondido">
+                        <ion-icon name="checkmark-sharp" data-test="check"></ion-icon>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="fundo largura escondido">
+        <div class="header largura">
+            <div class="logo">
+                <img src="./imagens/logo 2.png" alt="bate-papo">
+            </div>
+            <div class="iconeUsuarios" data-test="open-participants" onclick="exibirParticipantes()">
+                <ion-icon name="people"></ion-icon>
+            </div>
+        </div>
+        <div class="main largura">
+            <div class="acessoNaSala" data-test="message">
+                <div>
+                    <span class="hora">(09:21:45)</span>
+                    <span class="nome">João</span>
+                    <span class="mensagem">entra na sala...</span>
+                </div>
+            </div>
+            <div class="mensagemComum" data-test="message">
+                <div>
+                    <span class="hora">(09:22:28)</span>
+                    <span class="nome">João</span>
+                    <span class="mensagem">para</span>
+                    <span class="nome">Todos:</span>
+                    <span class="mensagem">Bom dia</span>
+                </div>
+            </div>
+            <div class="mensagemComum" data-test="message">
+                <div>
+                    <span class="hora">(09:22:38)</span>
+                    <span class="nome">Maria</span>
+                    <span class="mensagem">para</span>
+                    <span class="nome">João:</span>
+                    <span class="mensagem">Oi João :)</span>
+                </div>
+            </div>
+            <div class="mensagemPrivada" data-test="message">
+                <div >
+                    <span class="hora">(09:22:48)</span>
+                    <span class="nome">João</span>
+                    <span class="mensagem">reservadamente para</span>
+                    <span class="nome">Maria:</span>
+                    <span class="mensagem">Oi gatinha quer tc?</span>
+                </div>
+            </div>
+            <div class="acessoNaSala" data-test="message">
+                <div >
+                    <span class="hora">(09:22:58)</span>
+                    <span class="nome">Maria</span>
+                    <span class="mensagem">sai da sala...</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer largura">
+            <div class="enviarMensagem">
+                <input class="insereMensagem" type="text" placeholder="Escreva aqui..." data-test="input-message">
+                <p data-test="recipient">Enviando para Todos</p>
+            </div>
+            <div class="iconeEnvio" data-test="send-message" onclick="enviarMensagem()">
+                <ion-icon name="paper-plane-outline"></ion-icon>
+            </div>
+        </div>        
+    </div> <!-- fundo-->
+    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+    <script src="scripts.js"></script>
+  </body>
