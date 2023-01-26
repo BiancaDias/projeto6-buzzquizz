@@ -19,9 +19,6 @@ function exibirQuiz(){
     quiz.catch(erro);
 }
 
-function comparador() { 
-    return Math.random() - 0.5; 
-}
 function exibirQuizFuncionou(Carregarquiz){
     quizExibido = Carregarquiz.data;
     console.log(quizExibido);
@@ -47,7 +44,8 @@ function exibirQuizFuncionou(Carregarquiz){
         //const corDeFundo = document.querySelector('titulo-pergunta');
         //corDeFundo.getElementsByClassName.backgroundColor = quizExibido.questions[i].color;
         for(let j=0; j< respostas.length; j++){
-            alternativas =`<div class="resposta">
+            alternativas =`<div onclick="cliqueNaAlternativa(this)" class="resposta ${respostas[j].isCorrectAnswer
+            }">
                 <img src = "${respostas[j].image}">
                 <p>${respostas[j].text}</p>
             </div>`
@@ -59,6 +57,37 @@ function exibirQuizFuncionou(Carregarquiz){
 
     layout.innerHTML = layout.innerHTML + `</div>`;
 
+}
+
+function comparador() { 
+    return Math.random() - 0.5; 
+}
+
+function cliqueNaAlternativa(alternativa){
+    const divMaior = alternativa.parentNode;
+    alternativa.removeAttribute("onclick");
+
+    for(let i = 0; i<divMaior.children.length;i++){
+        if(divMaior.children[i].classList.contains('true')){
+            divMaior.children[i].classList.add('certa');
+        }
+        if(divMaior.children[i].classList.contains('false')){
+            divMaior.children[i].classList.add('errada');
+        }
+        if(divMaior.children[i] !== alternativa){
+            divMaior.children[i].classList.add('opacidade');
+            divMaior.children[i].removeAttribute("onclick");
+        } 
+    }
+    //fará a parte de scrollar até o próximo elemento!
+    const divAvo = divMaior.parentNode.parentNode;
+    for(let i=0; i<divAvo.children.length; i++){
+        if((divAvo.children[i] === divMaior.parentNode) && i+1 !== divAvo.children.length){
+            //usando função anonima
+            setTimeout(function(){ divAvo.children[i+1].scrollIntoView({ block: 'center', behavior: 'smooth' })}, 2000)
+            break;
+        }
+    }
 }
 
 function criarQuiz(){

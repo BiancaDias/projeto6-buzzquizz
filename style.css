@@ -244,8 +244,19 @@ h2{
     font-weight: 700;
     font-size: 20px;
     line-height: 23px;
-    color: #000000;
     margin-top: 6px;
+}
+
+.opacidade{
+    opacity: 40%;
+}
+
+.errada{
+    color: #FF4B4B;
+}
+
+.certa{
+    color: #009C22;
 }
 
 .quiz h3{
@@ -465,6 +476,7 @@ button{
     text-align: center;
     color: #818181;
 }
+
 
 @media (max-width: 1100px){
     body{
