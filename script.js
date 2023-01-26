@@ -15,8 +15,8 @@ function exibirQuizFuncionou(Carregarquiz){
     const layout = document.querySelector('.segunda-tela');
     layout.innerHTML = "";
     let template = "";
-    layout.innerHTML =`<div class="segunda-tela">
-    <div class="banner">
+    let alternativas = "";
+    layout.innerHTML =`<div class="banner">
         <h2>${quizExibido.title}</h2>
         <img src = "${quizExibido.image}" class="portrait">
         <div class="filtro"></div>
@@ -29,11 +29,15 @@ function exibirQuizFuncionou(Carregarquiz){
             <h3>${quizExibido.questions[i].title}</h3>
         </div>
         <div class="alternativas">`
+
+        //const corDeFundo = document.querySelector('titulo-pergunta');
+        //corDeFundo.getElementsByClassName.backgroundColor = quizExibido.questions[i].color;
         for(let j=0; j< quizExibido.questions[i].answers.length; j++){
-            `<div class="resposta">
+            alternativas =`<div class="resposta">
                 <img src = "${quizExibido.questions[i].answers[j].image}">
                 <p>${quizExibido.questions[i].answers[j].text}</p>
             </div>`
+            template= template + alternativas;
         }
         `</div>`;
         layout.innerHTML = layout.innerHTML + template;
