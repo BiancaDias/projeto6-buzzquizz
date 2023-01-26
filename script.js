@@ -19,6 +19,9 @@ function exibirQuiz(){
     quiz.catch(erro);
 }
 
+function comparador() { 
+    return Math.random() - 0.5; 
+}
 function exibirQuizFuncionou(Carregarquiz){
     quizExibido = Carregarquiz.data;
     console.log(quizExibido);
@@ -39,13 +42,14 @@ function exibirQuizFuncionou(Carregarquiz){
             <h3>${quizExibido.questions[i].title}</h3>
         </div>
         <div class="alternativas">`
-
+        let respostas = quizExibido.questions[i].answers; //copiando as respostas p/ outro array
+        respostas.sort(comparador); //embaralhando esse novo array
         //const corDeFundo = document.querySelector('titulo-pergunta');
         //corDeFundo.getElementsByClassName.backgroundColor = quizExibido.questions[i].color;
-        for(let j=0; j< quizExibido.questions[i].answers.length; j++){
+        for(let j=0; j< respostas.length; j++){
             alternativas =`<div class="resposta">
-                <img src = "${quizExibido.questions[i].answers[j].image}">
-                <p>${quizExibido.questions[i].answers[j].text}</p>
+                <img src = "${respostas[j].image}">
+                <p>${respostas[j].text}</p>
             </div>`
             template= template + alternativas;
         }

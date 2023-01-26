@@ -223,6 +223,7 @@ h2{
 }
 
 .alternativas{
+    margin-top: 20px;
     width: 689px;
     display: flex;
     flex-wrap: wrap;
@@ -510,6 +511,9 @@ button{
     }
     .titulo-pergunta, .alternativas{
         width: 340px;
+    }
+    .alternativas{
+        margin-top: 0px;
     }
     .titulo-pergunta{
         height: 89px;
