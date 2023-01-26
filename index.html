@@ -21,10 +21,10 @@
         <div class="meusQuizzes">
             <div class="meusQuizzesVazio escondido">
                 <div class="semQuizz">Você não criou nenhum quizz ainda :(</div>
-                <button class="criarQuizz">Criar Quizz</button>
+                <button class="criarQuizz" onclick="criarQuiz()">Criar Quizz</button>
             </div>
-            <div class="meusQuizzesPreenchido">
-                <h1>Seus Quizzes <ion-icon name="add-circle-sharp"></ion-icon></h1>
+            <div class="meusQuizzesPreenchido ">
+                <h1>Seus Quizzes <ion-icon name="add-circle-sharp" onclick="criarQuiz()"></ion-icon></h1>
                 <div class="listagemQuizz">
                     <div class="exibicaoQuizz">
                         <img src = "https://recreio.uol.com.br/media/uploads/harry_potter/hogwarts_capa_IoGEBAk.jpg" alt="imagemquizz">
@@ -121,7 +121,9 @@
             <button class = "reiniciar">Reiniciar Quizz</button>
             <button class = "voltar">Voltar pra home</button>
         </div>
-    </div><!--fim da segunda tela-->
+    </div>
+    <!--fim da segunda tela-->
+
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src = "script.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

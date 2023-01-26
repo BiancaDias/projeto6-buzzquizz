@@ -82,16 +82,19 @@ h1{
 }
 
 .primeira-tela h1{
-    width: 172px;
+    width: 160px;
     margin-left: 8px;
     font-weight: 700;
     font-size: 20px;
     line-height: 23px;
     color: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .meusQuizzes ion-icon{
-    font-size: 24px;
+    font-size: 32px;
     color: #EC362D;
 }
 
@@ -325,6 +328,38 @@ button{
 }
 
 @media (max-width: 1100px){
+    body{
+        width: 100%;
+    }
+   
+    .primeira-tela{
+        width: 100%;
+        padding-left: 17px;
+        padding-right: 17px;
+    }    
+
+    .meusQuizzes{
+        width: 100%;
+        margin-top: 38px;
+        margin-bottom: 0px;
+    }
+    
+    .primeira-tela h1{
+        margin-left: 0px;
+        margin-bottom: 0px;
+        width: 100%;
+    }
+        
+    .todosQuizzes{
+        width: 100%;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+   
+    .exibicaoQuizz{
+        margin: 15px 0;
+    }
+    
     .pergunta, .nivel, .quiz{
         width: 100% !important;
     }
@@ -398,6 +433,7 @@ button{
         height: 44px;
         margin-bottom: 8px;
     }
+
     button{
         font-size: 18px;
         line-height: 21px;
