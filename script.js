@@ -1,9 +1,13 @@
 const primeiraTela = document.querySelector(".primeira-tela");
-const segundaTela = document.querySelector(".segunda-tela");
+let segundaTela = document.querySelector(".segunda-tela");
 const terceiraTela = document.querySelector(".terceira-tela");
 const meusQuizzesVazio = document.querySelector(".meusQuizzesVazio");
 const meusQuizzesPreenchido = document.querySelector(".meusQuizzesPreenchido");
 const numQuizzUsuario = 0;
+let pontuacao = 0;
+let clique = 0;
+let quizExibido;
+let divAvo;
 
 buscarQuizz();
 exibirQuiz();
@@ -21,12 +25,12 @@ function exibirQuiz(){
 
 function exibirQuizFuncionou(Carregarquiz){
     quizExibido = Carregarquiz.data;
-    console.log(quizExibido);
-    const layout = document.querySelector('.segunda-tela');
-    layout.innerHTML = "";
+
+    segundaTela = document.querySelector('.segunda-tela');
+    segundaTela.innerHTML = "";
     let template = "";
     let alternativas = "";
-    layout.innerHTML =`<div class="banner">
+    segundaTela.innerHTML =`<div class="banner">
         <h2>${quizExibido.title}</h2>
         <img src = "${quizExibido.image}" class="portrait">
         <div class="filtro"></div>
@@ -41,8 +45,7 @@ function exibirQuizFuncionou(Carregarquiz){
         <div class="alternativas">`
         let respostas = quizExibido.questions[i].answers; //copiando as respostas p/ outro array
         respostas.sort(comparador); //embaralhando esse novo array
-        //const corDeFundo = document.querySelector('titulo-pergunta');
-        //corDeFundo.getElementsByClassName.backgroundColor = quizExibido.questions[i].color;
+
         for(let j=0; j< respostas.length; j++){
             alternativas =`<div onclick="cliqueNaAlternativa(this)" class="resposta ${respostas[j].isCorrectAnswer
             }">
@@ -51,11 +54,14 @@ function exibirQuizFuncionou(Carregarquiz){
             </div>`
             template= template + alternativas;
         }
-        `</div>`;
-        layout.innerHTML = layout.innerHTML + template;
+        segundaTela.innerHTML = segundaTela.innerHTML + template;
+        let alteraCor = segundaTela.lastChild;
+        alteraCor.children[0].style.backgroundColor =quizExibido.questions[i].color;
     }
 
-    layout.innerHTML = layout.innerHTML + `</div>`;
+    //segundaTela.innerHTML = segundaTela.innerHTML + `</div>`;
+
+    
 
 }
 
@@ -64,8 +70,12 @@ function comparador() {
 }
 
 function cliqueNaAlternativa(alternativa){
+    clique++;
     const divMaior = alternativa.parentNode;
     alternativa.removeAttribute("onclick");
+    if(alternativa.classList.contains('true')){
+        pontuacao++;
+    }
 
     for(let i = 0; i<divMaior.children.length;i++){
         if(divMaior.children[i].classList.contains('true')){
@@ -79,8 +89,11 @@ function cliqueNaAlternativa(alternativa){
             divMaior.children[i].removeAttribute("onclick");
         } 
     }
+    
+    pontuacaoFinal();
     //fará a parte de scrollar até o próximo elemento!
-    const divAvo = divMaior.parentNode.parentNode;
+    divAvo = divMaior.parentNode.parentNode;
+
     for(let i=0; i<divAvo.children.length; i++){
         if((divAvo.children[i] === divMaior.parentNode) && i+1 !== divAvo.children.length){
             //usando função anonima
@@ -88,8 +101,50 @@ function cliqueNaAlternativa(alternativa){
             break;
         }
     }
+    
 }
 
+function pontuacaoFinal(){
+
+    let nivel;
+    if(clique===quizExibido.questions.length){
+        const resultado = (pontuacao * 100) / quizExibido.questions.length;
+
+        for(let i=quizExibido.levels.length-1; i>=0; i--){
+            if(Math.round(resultado)>=quizExibido.levels[i].minValue){
+                nivel = quizExibido.levels[i];
+                break
+            }
+        }
+
+        segundaTela.innerHTML = segundaTela.innerHTML + `<div class="nivel">
+        <div class="acerto">
+            <h3>${Math.round(resultado)}% de acerto: ${nivel.title}</h3>
+        </div>
+        <div class="expli-acertos">
+            <img src=${nivel.image}>
+            <p>${nivel.text}</p>
+        </div>
+        </div>
+        <div class="botoes">
+            <button onclick="reiniciarQuiz()" class = "reiniciar">Reiniciar Quizz</button>
+            <button onclick="voltarParaHome()" class = "voltar">Voltar pra home</button>
+        </div>
+        </div>`
+        /*
+        const ultimaDiv = document.querySelector('.segunda-tela div:last-of-type');
+        console.log(ultimaDiv);
+        setTimeout(function(){ultimaDiv.scrollIntoView({ block: 'center', behavior: 'smooth' })}, 2000)*/
+    }
+}
+
+function reiniciarQuiz(){
+    exibirQuiz();
+    const ultimaDiv = document.querySelector('.segunda-tela div:last-of-type');
+    ultimaDiv.scrollIntoView({ block: 'center', behavior: 'smooth' })
+    pontuacao = 0;
+    clique = 0;
+}
 function criarQuiz(){
     primeiraTela.classList.add('escondido');
     terceiraTela.classList.remove('escondido');
