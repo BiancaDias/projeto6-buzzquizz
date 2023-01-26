@@ -21,57 +21,17 @@
         <div class="meusQuizzes">
             <div class="meusQuizzesVazio escondido">
                 <div class="semQuizz">Você não criou nenhum quizz ainda :(</div>
-                <button class="criarQuizz">Criar Quizz</button>
+                <button class="criarQuizz" onclick="criarQuiz()">Criar Quizz</button>
             </div>
-            <div class="meusQuizzesPreenchido">
-                <h1>Seus Quizzes <ion-icon name="add-circle-sharp"></ion-icon></h1>
+            <div class="meusQuizzesPreenchido ">
+                <h1>Seus Quizzes <ion-icon name="add-circle-sharp" onclick="criarQuiz()"></ion-icon></h1>
                 <div class="listagemQuizz">
-                    <div class="exibicaoQuizz">
-                        <img src = "https://recreio.uol.com.br/media/uploads/harry_potter/hogwarts_capa_IoGEBAk.jpg" alt="imagemquizz">
-                        <div class="degrade"></div>
-                        <div class="descricaoQuizz">O quanto você é de Hogwarts?</div>
-                    </div>
-                    <div class="exibicaoQuizz">
-                        <img src = "https://gkpb.com.br/wp-content/uploads/2022/12/os-melhores-episodios-natal-os-simpsons-scaled-e1671654344475.jpg" alt="imagemquizz">
-                        <div class="degrade"></div>
-                        <div class="descricaoQuizz">Acerte os personagens corretos dos Simpsons e prove seu amor!</div>
-                    </div>
-                    <div class="exibicaoQuizz">
-                        <img src = "https://recreio.uol.com.br/media/uploads/harry_potter/hogwarts_capa_IoGEBAk.jpg" alt="imagemquizz">
-                        <div class="degrade"></div>
-                        <div class="descricaoQuizz">O quanto você é de Hogwarts?</div>
-                    </div> 
-                    <div class="exibicaoQuizz">
-                        <img src = "https://gkpb.com.br/wp-content/uploads/2022/12/os-melhores-episodios-natal-os-simpsons-scaled-e1671654344475.jpg" alt="imagemquizz">
-                        <div class="degrade"></div>
-                        <div class="descricaoQuizz">Acerte os personagens corretos dos Simpsons e prove seu amor!</div>
-                    </div>
                 </div>
             </div>
         </div>
         <div class="todosQuizzes">
             <h1>Todos os Quizzes</h1>
             <div class="listagemQuizz">
-                <div class="exibicaoQuizz">
-                    <img src = "https://recreio.uol.com.br/media/uploads/harry_potter/hogwarts_capa_IoGEBAk.jpg" alt="imagemquizz">
-                    <div class="degrade"></div>
-                    <div class="descricaoQuizz">O quanto você é de Hogwarts?</div>
-                </div> 
-                <div class="exibicaoQuizz">
-                    <img src = "https://gkpb.com.br/wp-content/uploads/2022/12/os-melhores-episodios-natal-os-simpsons-scaled-e1671654344475.jpg" alt="imagemquizz">
-                    <div class="degrade"></div>
-                    <div class="descricaoQuizz">Acerte os personagens corretos dos Simpsons e prove seu amor!</div>
-                </div>
-                <div class="exibicaoQuizz">
-                    <img src = "https://recreio.uol.com.br/media/uploads/harry_potter/hogwarts_capa_IoGEBAk.jpg" alt="imagemquizz">
-                    <div class="degrade"></div>
-                    <div class="descricaoQuizz">O quanto você é de Hogwarts?</div>
-                </div> 
-                <div class="exibicaoQuizz">
-                    <img src = "https://gkpb.com.br/wp-content/uploads/2022/12/os-melhores-episodios-natal-os-simpsons-scaled-e1671654344475.jpg" alt="imagemquizz">
-                    <div class="degrade"></div>
-                    <div class="descricaoQuizz">Acerte os personagens corretos dos Simpsons e prove seu amor!</div>
-                </div>
             </div>
         </div>
     </div>
@@ -121,7 +81,86 @@
             <button class = "reiniciar">Reiniciar Quizz</button>
             <button class = "voltar">Voltar pra home</button>
         </div>
-    </div><!--fim da segunda tela-->
+    </div>
+    <!--fim da segunda tela-->
+    <!--inicio da terceira tela-->
+    <div class="terceira-tela escondido">
+        <div class="tela-3-1">
+            <h1>Comece pelo começo</h1>
+            <div class="conteinerCriacao">
+                <input type="text" placeholder="Título do seu quizz">
+                <input type="text" placeholder="URL da imagem do seu quizz">
+                <input type="text" placeholder="Quantidade de perguntas do quizz">
+                <input type="text" placeholder="Quantidade de níveis do quizz">
+            </div>
+            <div class="proxPag" onclick="criarProxPag(this)"> Prosseguir pra criar perguntas </div>
+        </div>
+        <div class="tela-3-2 escondido">
+            <h1>Crie suas perguntas</h1>
+            <div class="conteinerCriacao reduzido escondido">
+                <div class="subtitulos">Pergunta 1 <ion-icon name="create-sharp" onclick="expandirConteiner(this)"></ion-icon></div>
+           </div>
+            <div class="conteinerCriacao ampliado pergunta1">
+                 <div class="subtitulos">Pergunta 1</div>
+                <input type="text" placeholder="Texto da pergunta">
+                <input type="text" placeholder="Cor de fundo da pergunta">
+                <div class="subtitulos">Resposta correta</div>
+                <input type="text" placeholder="Resposta correta">
+                <input type="text" placeholder="URL da imagem">
+                <div class="subtitulos">Respostas incorretas</div>
+                <input type="text" placeholder="Resposta incorreta 1">
+                <input type="text" placeholder="URL da imagem 1">
+                <div class="divisorInput"></div>
+                <input type="text" placeholder="Resposta incorreta 2">
+                <input type="text" placeholder="URL da imagem 2">
+                <div class="divisorInput"></div>
+                <input type="text" placeholder="Resposta incorreta 3">
+                <input type="text" placeholder="URL da imagem 3">
+            </div>
+            <div class="conteinerCriacao reduzido">
+                <div class="subtitulos">Pergunta 2 <ion-icon name="create-sharp" onclick="expandirConteiner(this)"></ion-icon></div>
+           </div>
+           <div class="conteinerCriacao reduzido">
+            <div class="subtitulos">Pergunta 3 <ion-icon name="create-sharp" onclick="expandirConteiner(this)"></ion-icon></div>
+       </div>
+            <div class="proxPag" onclick="criarProxPag(this)"> Prosseguir pra criar níveis </div>
+        </div>
+        <div class="tela-3-3 escondido">
+            <h1>Agora, decida os níveis</h1>
+            <div class="conteinerCriacao reduzido escondido">
+                <div class="subtitulos">Nível 1 <ion-icon name="create-sharp" onclick="expandirConteiner(this)"></ion-icon></div>
+            </div>
+            <div class="conteinerCriacao ampliado pergunta1">
+                <div class="subtitulos">Nível 1</div>
+                <input type="text" placeholder="Título do nível">
+                <input type="text" placeholder="% de acerto mínima">
+                <input type="text" placeholder="URL da imagem do nível">
+                <input type="text" placeholder="Descrição do nível">
+            </div>
+            <div class="conteinerCriacao reduzido">
+                <div class="subtitulos">Nível 2 <ion-icon name="create-sharp" onclick="expandirConteiner(this)"></ion-icon></div>
+            </div>
+            <div class="conteinerCriacao reduzido">
+                <div class="subtitulos">Nível 3 <ion-icon name="create-sharp" onclick="expandirConteiner(this)"></ion-icon></div>
+            </div>
+            <div class="proxPag" onclick="criarProxPag(this)"> Finalizar Quizz </div>
+        </div>
+        <div class="tela-3-4 escondido">
+            <h1>Seu quizz está pronto!</h1>
+            <div class="conteinerFim">
+                <img src = "https://gkpb.com.br/wp-content/uploads/2022/12/os-melhores-episodios-natal-os-simpsons-scaled-e1671654344475.jpg" alt="imagemquizz">
+                <div class="degrade"></div>
+                <div class="descricaoQuizz">O quanto você gosta de simpsons</div>
+            </div>
+            <div class="proxPag" onclick="exibirQuiz()"> Acessar Quizz </div>
+            <div class="voltarParaHome" onclick="voltarParaHome()"> Voltar pra home </div>
+            
+        </div>
+
+        
+    </div>
+    <!--fim da terceira tela-->
+
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src = "script.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
