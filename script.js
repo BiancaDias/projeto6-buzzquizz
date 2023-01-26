@@ -90,7 +90,6 @@ function cliqueNaAlternativa(alternativa){
         } 
     }
     
-    pontuacaoFinal();
     //fará a parte de scrollar até o próximo elemento!
     divAvo = divMaior.parentNode.parentNode;
 
@@ -101,6 +100,7 @@ function cliqueNaAlternativa(alternativa){
             break;
         }
     }
+    pontuacaoFinal();
     
 }
 
@@ -131,10 +131,10 @@ function pontuacaoFinal(){
             <button onclick="voltarParaHome()" class = "voltar">Voltar pra home</button>
         </div>
         </div>`
-        /*
-        const ultimaDiv = document.querySelector('.segunda-tela div:last-of-type');
-        console.log(ultimaDiv);
-        setTimeout(function(){ultimaDiv.scrollIntoView({ block: 'center', behavior: 'smooth' })}, 2000)*/
+        
+        const revelacaoNivel = document.querySelector('.nivel');
+        
+        setTimeout(function(){revelacaoNivel.scrollIntoView({ block: 'center', behavior: 'smooth' })}, 2000)
     }
 }
 
