@@ -3,7 +3,18 @@ let segundaTela = document.querySelector(".segunda-tela");
 const terceiraTela = document.querySelector(".terceira-tela");
 const meusQuizzesVazio = document.querySelector(".meusQuizzesVazio");
 const meusQuizzesPreenchido = document.querySelector(".meusQuizzesPreenchido");
-const numQuizzUsuario = 0;
+let arrayQuizz;
+let arrayQuestoes = [];
+let arrayRespostas = [];
+let arrayNiveis = [];
+let arrayMeusQuizz = [];
+let verificadorTela31 = 0; // considero para erro, se estiver ok muda para 1
+let verificadorTela32 = 0;
+let verificadorTela33 = 0;
+let numPerg = 0;
+let numNiveis = 0;
+let nomeQuizz;
+let imgQuizz;
 let pontuacao = 0;
 let clique = 0;
 let quizExibido;
@@ -11,6 +22,10 @@ let divAvo;
 
 buscarQuizz();
 exibirQuiz();
+
+const listaSerializada = localStorage.getItem("lista"); // Pegando de volta a string armazenada na chave "lista"
+const lista = JSON.parse(listaSerializada); // Transformando a string de volta na array original
+arrayMeusQuizz = lista;
 
 function erro(exibiErro){
     console.log("ERRO FOI DO TIPO " + exibiErro.response.status);
@@ -145,6 +160,7 @@ function reiniciarQuiz(){
     pontuacao = 0;
     clique = 0;
 }
+
 function criarQuiz(){
     primeiraTela.classList.add('escondido');
     terceiraTela.classList.remove('escondido');
@@ -170,19 +186,21 @@ function buscarQuizz(){
 
 function buscarQuizzFuncionou(buscarQquizzes){
     const quizzes = buscarQquizzes.data;
-    quizzesFiltrados = quizzes.filter(filtroQuizzes);
     quizzes.forEach(exibirTodosTela1);
-    if(numQuizzUsuario === 0){
+    if(arrayMeusQuizz === null){
         meusQuizzesPreenchido.classList.add('escondido');
         meusQuizzesVazio.classList.remove('escondido');
     } else {
+        quizzesFiltrados = quizzes.filter(filtroQuizzes);
         quizzesFiltrados.forEach(exibirMeusTela1);
     }
 }
 
 function filtroQuizzes(todosQuizzes){
-    if (todosQuizzes.id === "status" ){ //vejo se está na lista local, se sim add 
-        return true;
+    for (let i=0; i<arrayMeusQuizz.length; i++){
+        if (todosQuizzes.id === arrayMeusQuizz ){ //vejo se está na lista local, se sim add 
+            return true;
+        }
     }
 }
 
@@ -199,39 +217,235 @@ function exibirTodosTela1(quizzTelaEntrada){
 
 function exibirMeusTela1(quizzTelaEntrada){
     const listaMeus = meusQuizzesPreenchido.querySelector(".listagemQuizz");
+    if (arrayMeusQuizz[0] !== undefined){
     //montar a parte de pegar o numero salvo e exibir
-    listaMeus.innerHTML += `
-        <div class="exibicaoQuizz" onclick="exibirQuiz(this)">
-            <img src = ${quizzTelaEntrada.image} alt="imagemquizz">
-            <div class="degrade"></div>
-            <div class="descricaoQuizz">${quizzTelaEntrada.title}</div>
-        </div>`;
+        listaMeus.innerHTML += `
+            <div class="exibicaoQuizz" onclick="exibirQuiz(this)">
+                <img src = ${quizzTelaEntrada.image} alt="imagemquizz">
+                <div class="degrade"></div>
+                <div class="descricaoQuizz">${quizzTelaEntrada.title}</div>
+            </div>`;
+    }
 }
 
 function criarProxPag(Pagina){
     const pagAtual = Pagina.parentNode;
     const pagClassList = pagAtual.classList[0];
     if (pagClassList == "tela-3-1"){
-        proxPag = document.querySelector(".tela-3-2");
+        verificaTela31()
+        if (verificadorTela31 === 1){
+            proxPag = document.querySelector(".tela-3-2");
+            Tela32()
+            pagAtual.classList.add('escondido');
+            proxPag.classList.remove('escondido');
+        }      
     } else if (pagClassList === "tela-3-2"){
-        proxPag = document.querySelector(".tela-3-3");
+        verificaTela32()
+        if (verificadorTela32 === 1){
+            proxPag = document.querySelector(".tela-3-3");
+            Tela33()
+            pagAtual.classList.add('escondido');
+            proxPag.classList.remove('escondido');
+        }
     } else if (pagClassList === "tela-3-3"){
-        proxPag = document.querySelector(".tela-3-4");
+        verificaTela33()
+        if (verificadorTela33 === 1){
+            Tela34()
+            enviarNovoQuizzFuncionou()
+        }
     } 
-    pagAtual.classList.add('escondido');
-    proxPag.classList.remove('escondido');
 }
 
-function expandirConteiner(perguntaCriar){
-    const conteinerAtual = perguntaCriar.parentNode;
-    const pagClassList = conteinerAtual.innerHTML;
-    if (pagClassList == "Pergunta 1"){
-        proxPag = document.querySelector(".pergunta1");
-    } else if (pagClassList === "Pergunta 2"){
-        proxPag = document.querySelector(".pergunta2");
-    } else if (pagClassList === "Pergunta 3"){
-        proxPag = document.querySelector(".pergunta3");
-    } 
-    conteinerAtual.classList.add('escondido');
+function verificaTela31(){
+    const itemParaValidar = document.querySelector(".tela-3-1 .conteinerCriacao");
+    const caracteres = itemParaValidar.children[0].value.length;
+    const validaURL = itemParaValidar.children[1].checkValidity();
+    numPerg = Number(itemParaValidar.children[2].value);
+    numNiveis = Number(itemParaValidar.children[3].value);
+    if (caracteres > 19 && caracteres < 66 && validaURL === true && numPerg > 2 && numNiveis > 1){
+        verificadorTela31 = 1;
+        nomeQuizz = itemParaValidar.children[0].value;
+        imgQuizz = itemParaValidar.children[1].value;
+    } else {
+        alert('Preencha os dados corretamente!');
+    }
+}
+
+function Tela32(){
+    const pag = document.querySelector(".tela-3-2");
+    for (let i = 1; i < numPerg+1; i++){
+        pag.innerHTML += `
+        <div class="conteinerCriacao reduzido">
+            <div class="subtitulos">Pergunta ${i} <ion-icon name="create-sharp" onclick="expandirPergunta(this)"></ion-icon></div>
+        </div>`;
+    }
+    pag.innerHTML += `
+    <div class="proxPag" onclick="criarProxPag(this)"> Prosseguir pra criar níveis </div>`;
+}
+
+function expandirPergunta(pergunta){
+    const pergAtual = pergunta.parentNode.innerHTML[9];
+    const conteinerAtual = pergunta.parentNode.parentNode;
+    conteinerAtual.classList.remove("reduzido");
+    conteinerAtual.classList.add("Pergunta"+pergAtual);
+    conteinerAtual.innerHTML = `
+        <div class="subtitulos">Pergunta ${pergAtual}</div>
+        <input type="text" placeholder="Texto da pergunta">
+        <input type="text" placeholder="Cor de fundo da pergunta">
+        <div class="subtitulos">Resposta correta</div>
+        <input type="text" placeholder="Resposta correta">
+        <input type="URL" placeholder="URL da imagem">
+        <div class="subtitulos">Respostas incorretas</div>
+        <input type="text" placeholder="Resposta incorreta 1">
+        <input type="URL" placeholder="URL da imagem 1">
+        <div class="divisorInput"></div>
+        <input type="text" placeholder="Resposta incorreta 2">
+        <input type="URL" placeholder="URL da imagem 2">
+        <div class="divisorInput"></div>
+        <input type="text" placeholder="Resposta incorreta 3">
+        <input type="URL" placeholder="URL da imagem 3">
+    `;
+}
+
+function verificaTela32(){
+    if(document.querySelector(".Pergunta"+numPerg) === null){
+        alert('Preencha os dados corretamente!');
+    }
+    for (let i = 1; i < numPerg+1; i++){
+        const itemParaValidar = document.querySelector(".Pergunta"+i);
+        const caracteres = itemParaValidar.children[1].value.length;
+        const validaCor = itemParaValidar.children[2].value;
+        var RegExp = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(validaCor) && validaCor.length === 7;
+        const respCerta = itemParaValidar.children[4].value !== "";
+        const validaURL1 = itemParaValidar.children[5].checkValidity();
+        const respErrada = itemParaValidar.children[7].value !== "";
+        const validaURL2 = itemParaValidar.children[8].checkValidity();
+        if (caracteres > 19 && RegExp === true && respCerta === true && validaURL1 === true && respErrada === true && validaURL2 === true){
+            verificadorTela32 = 1;
+            const arrayRespostas = [{
+                text: itemParaValidar.children[4].value,
+                image: itemParaValidar.children[5].value,
+                isCorrectAnswer: "true"},
+                {
+                text: itemParaValidar.children[7].value,
+                image: itemParaValidar.children[8].value,
+                isCorrectAnswer: "false"}];
+            if (itemParaValidar.children[10].value !== "" && itemParaValidar.children[11].checkValidity() === true){
+                arrayRespostas.push({
+                    text: itemParaValidar.children[10].value,
+                    image: itemParaValidar.children[11].value,
+                    isCorrectAnswer: "false"});
+            }
+            if (itemParaValidar.children[13].value !== "" && itemParaValidar.children[14].checkValidity() === true){
+                arrayRespostas.push({
+                    text: itemParaValidar.children[13].value,
+                    image: itemParaValidar.children[14].value,
+                    isCorrectAnswer: "false"});
+            }
+            arrayQuestoes.push({title:itemParaValidar.children[1].value, image:itemParaValidar.children[2].value, answers: arrayRespostas});
+        } else {
+            verificadorTela32 = 0;    
+        }
+    }
+    if(verificadorTela32 === 0){
+        alert('Preencha os dados corretamente!');
+    }
+}
+
+function Tela33(){
+    const pag = document.querySelector(".tela-3-3");
+    for (let i = 1; i < numNiveis+1; i++){
+        console.log(i);
+        pag.innerHTML += `
+        <div class="conteinerCriacao reduzido">
+            <div class="subtitulos">Nível ${i} <ion-icon name="create-sharp" onclick="expandirNiveis(this)"></ion-icon></div>
+        </div>`;
+    }
+    pag.innerHTML += `
+    <div class="proxPag" onclick="criarProxPag(this)"> Finalizar Quizz </div>`;
+}
+
+function expandirNiveis(nivel){
+    console.log(nivel.parentNode.innerHTML);
+    const nivelAtual = nivel.parentNode.innerHTML[6];
+    const conteinerAtual = nivel.parentNode.parentNode;
+    console.log(nivelAtual);
+    conteinerAtual.classList.remove("reduzido");
+    conteinerAtual.classList.add("Nivel"+nivelAtual);
+    conteinerAtual.innerHTML = `
+        <div class="subtitulos">Nível ${nivelAtual}</div>
+        <input type="text" placeholder="Título do nível">
+        <input type="text" placeholder="% de acerto mínima">
+        <input type="URL" placeholder="URL da imagem do nível">
+        <input type="text" placeholder="Descrição do nível">
+    `;
+}
+
+function verificaTela33(){
+    let acertoZero = 0;
+    for (let i = 1; i < numNiveis+1; i++){
+        const itemParaValidar = document.querySelector(".Nivel"+i);
+        const caracteres = itemParaValidar.children[1].value.length;
+        const validaAcerto = itemParaValidar.children[2].value;
+        const validaURL = itemParaValidar.children[3].checkValidity();
+        const validaNivel = itemParaValidar.children[4].value.length;
+        if (caracteres > 9 && validaAcerto >= 0 && validaAcerto <=100 && validaURL === true && validaNivel >30){
+            verificadorTela33 = 1;
+            arrayNiveis.push({
+                title: itemParaValidar.children[1].value,
+			    image: itemParaValidar.children[3].value,
+			    text: itemParaValidar.children[4].value,
+			    minValue: itemParaValidar.children[2].value});
+            if (itemParaValidar.children[2].value == 0){
+                acertoZero += 1;
+                console.log(acertoZero);
+            }
+        } else {
+            verificadorTela33 = 0;    
+        }
+    }
+    if(verificadorTela33 === 0 || acertoZero === 0){
+        alert('Preencha os dados corretamente!');
+    } else {
+        enviarNovoQuizz();
+    }   
+}
+
+function enviarNovoQuizz(){
+    
+    const promessaNovoQuizz = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", arrayQuizz);
+
+    promessaNovoQuizz.then(enviarNovoQuizzFuncionou);
+
+    promessaNovoQuizz.catch(erro);
+}
+
+function enviarNovoQuizzFuncionou(){
+    pagAtual = document.querySelector(".tela-3-3");
+    proxPag = document.querySelector(".tela-3-4");
+    pagAtual.classList.add('escondido');
     proxPag.classList.remove('escondido');
+    const novoID = (enviarNovoQuizzFuncionou.id);
+    arrayMeusQuizz.push(novoID);
+    const arraySerializado = JSON.stringify(exemplo);
+    localStorage.setItem("lista", arraySerializado);
+    arrayMeusQuizz.push(novoID);
+}
+
+function Tela34(){
+    const pag = document.querySelector(".tela-3-4");
+    pag.innerHTML += `
+        <div class="conteinerFim">
+            <img src = ${imgQuizz} alt="imagemquizz">
+            <div class="degrade"></div>
+            <div class="descricaoQuizz">${nomeQuizz}</div>
+        </div>
+        <div class="proxPag" onclick="exibirQuiz()"> Acessar Quizz </div>
+            <div class="voltarParaHome" onclick="voltarParaHome()"> Voltar pra home </div>
+    `;
+    arrayQuizz = {
+        title: nomeQuizz,
+        image: imgQuizz,
+        questions: arrayQuestoes,
+        levels: arrayNiveis};
 }
