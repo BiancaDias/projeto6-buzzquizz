@@ -46,6 +46,11 @@ h1{
     border-radius: 5px;
 }
 
+.meusQuizzesPreenchido div{
+    display: flex;
+    justify-content: flex-start;
+}
+
 .semQuizz{
     width: 250px;
     height: 107px;

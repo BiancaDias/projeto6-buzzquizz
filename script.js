@@ -21,9 +21,11 @@ let quizExibido;
 let divAvo;
 let idQuizAtual;
 let novoID;
+let todosIds = [];
 
 buscarQuizz();
 
+// inicializo com o que já tem e quando crio um novo faco um push para atualizar
 const listaSerializada = localStorage.getItem("lista"); // Pegando de volta a string armazenada na chave "lista"
 const lista = JSON.parse(listaSerializada); // Transformando a string de volta na array original
 arrayMeusQuizz = lista;
@@ -193,7 +195,7 @@ function buscarQuizz(){
 function buscarQuizzFuncionou(buscarQquizzes){
     const quizzes = buscarQquizzes.data;
     quizzes.forEach(exibirTodosTela1);
-    if(arrayMeusQuizz === null){
+    if(arrayMeusQuizz.length === 0){
         meusQuizzesPreenchido.classList.add('escondido');
         meusQuizzesVazio.classList.remove('escondido');
     } else {
@@ -204,7 +206,7 @@ function buscarQuizzFuncionou(buscarQquizzes){
 
 function filtroQuizzes(todosQuizzes){
     for (let i=0; i<arrayMeusQuizz.length; i++){
-        if (todosQuizzes.id === arrayMeusQuizz ){ //vejo se está na lista local, se sim add 
+        if (todosQuizzes.id === arrayMeusQuizz[i] ){ //vejo se está na lista local, se sim add 
             return true;
         }
     }
@@ -256,8 +258,9 @@ function criarProxPag(Pagina){
     } else if (pagClassList === "tela-3-3"){
         verificaTela33()
         if (verificadorTela33 === 1){
-            Tela34()
-            enviarNovoQuizzFuncionou()
+            arrayQuizz = {title: nomeQuizz, image: imgQuizz, questions: arrayQuestoes, levels: arrayNiveis};
+            Tela34();
+            enviarNovoQuizz();
         }
     } 
 }
@@ -388,6 +391,7 @@ function expandirNiveis(nivel){
 }
 
 function verificaTela33(){
+    arrayNiveis = [];
     let acertoZero = 0;
     for (let i = 1; i < numNiveis+1; i++){
         const itemParaValidar = document.querySelector(".Nivel"+i);
@@ -412,9 +416,7 @@ function verificaTela33(){
     }
     if(verificadorTela33 === 0 || acertoZero === 0){
         alert('Preencha os dados corretamente!');
-    } else {
-        enviarNovoQuizz();
-    }   
+    }
 }
 
 function enviarNovoQuizz(){
@@ -431,11 +433,11 @@ function enviarNovoQuizzFuncionou(certo){
     proxPag = document.querySelector(".tela-3-4");
     pagAtual.classList.add('escondido');
     proxPag.classList.remove('escondido');
-    novoID = (certo.id);
+
+    novoID = (certo.data.id);
     arrayMeusQuizz.push(novoID);
-    const arraySerializado = JSON.stringify(exemplo);
+    const arraySerializado = JSON.stringify(arrayMeusQuizz);
     localStorage.setItem("lista", arraySerializado);
-    arrayMeusQuizz.push(novoID);
 }
 
 function Tela34(){
@@ -449,9 +451,4 @@ function Tela34(){
         <div class="proxPag" onclick="exibirQuiz(${novoID})"> Acessar Quizz </div>
             <div class="voltarParaHome" onclick="voltarParaHome()"> Voltar pra home </div>
     `;
-    arrayQuizz = {
-        title: nomeQuizz,
-        image: imgQuizz,
-        questions: arrayQuestoes,
-        levels: arrayNiveis};
 }
