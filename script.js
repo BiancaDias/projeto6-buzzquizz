@@ -19,9 +19,10 @@ let pontuacao = 0;
 let clique = 0;
 let quizExibido;
 let divAvo;
+let idQuizAtual;
+let novoID;
 
 buscarQuizz();
-exibirQuiz();
 
 const listaSerializada = localStorage.getItem("lista"); // Pegando de volta a string armazenada na chave "lista"
 const lista = JSON.parse(listaSerializada); // Transformando a string de volta na array original
@@ -31,14 +32,19 @@ function erro(exibiErro){
     console.log("ERRO FOI DO TIPO " + exibiErro.response.status);
 }
 
-function exibirQuiz(){
-    //fazendo com o id 1 por exemplo
-    const quiz = axios.get('https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/1')
+function exibirQuiz(id){
+    pontuacao = 0;
+    clique = 0;
+    idQuizAtual = id;
+    console.log(idQuizAtual);
+    const quiz = axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`);
     quiz.then(exibirQuizFuncionou);
     quiz.catch(erro);
 }
 
 function exibirQuizFuncionou(Carregarquiz){
+    primeiraTela.classList.add('escondido');
+    segundaTela.classList.remove('escondido');
     quizExibido = Carregarquiz.data;
 
     segundaTela = document.querySelector('.segunda-tela');
@@ -120,7 +126,8 @@ function cliqueNaAlternativa(alternativa){
 }
 
 function pontuacaoFinal(){
-
+    console.log("quantidade de perguntas " + quizExibido.questions.length);
+    console.log("quantidade de cliques " + clique);
     let nivel;
     if(clique===quizExibido.questions.length){
         const resultado = (pontuacao * 100) / quizExibido.questions.length;
@@ -154,11 +161,10 @@ function pontuacaoFinal(){
 }
 
 function reiniciarQuiz(){
-    exibirQuiz();
+    exibirQuiz(idQuizAtual);
     const ultimaDiv = document.querySelector('.segunda-tela div:last-of-type');
     ultimaDiv.scrollIntoView({ block: 'center', behavior: 'smooth' })
-    pontuacao = 0;
-    clique = 0;
+    
 }
 
 function criarQuiz(){
@@ -208,7 +214,7 @@ function exibirTodosTela1(quizzTelaEntrada){
     const todosQuizzes = document.querySelector(".todosQuizzes");
     const listaTodos = todosQuizzes.querySelector(".listagemQuizz");
     listaTodos.innerHTML += `
-        <div class="exibicaoQuizz" onclick="exibirQuiz(this)">
+        <div class="exibicaoQuizz" onclick="exibirQuiz(${quizzTelaEntrada.id})">
             <img src = ${quizzTelaEntrada.image} alt="imagemquizz">
             <div class="degrade"></div>
             <div class="descricaoQuizz">${quizzTelaEntrada.title}</div>
@@ -220,7 +226,7 @@ function exibirMeusTela1(quizzTelaEntrada){
     if (arrayMeusQuizz[0] !== undefined){
     //montar a parte de pegar o numero salvo e exibir
         listaMeus.innerHTML += `
-            <div class="exibicaoQuizz" onclick="exibirQuiz(this)">
+            <div class="exibicaoQuizz" onclick="exibirQuiz(${quizzTelaEntrada.id})">
                 <img src = ${quizzTelaEntrada.image} alt="imagemquizz">
                 <div class="degrade"></div>
                 <div class="descricaoQuizz">${quizzTelaEntrada.title}</div>
@@ -420,12 +426,12 @@ function enviarNovoQuizz(){
     promessaNovoQuizz.catch(erro);
 }
 
-function enviarNovoQuizzFuncionou(){
+function enviarNovoQuizzFuncionou(certo){
     pagAtual = document.querySelector(".tela-3-3");
     proxPag = document.querySelector(".tela-3-4");
     pagAtual.classList.add('escondido');
     proxPag.classList.remove('escondido');
-    const novoID = (enviarNovoQuizzFuncionou.id);
+    novoID = (certo.id);
     arrayMeusQuizz.push(novoID);
     const arraySerializado = JSON.stringify(exemplo);
     localStorage.setItem("lista", arraySerializado);
@@ -440,7 +446,7 @@ function Tela34(){
             <div class="degrade"></div>
             <div class="descricaoQuizz">${nomeQuizz}</div>
         </div>
-        <div class="proxPag" onclick="exibirQuiz()"> Acessar Quizz </div>
+        <div class="proxPag" onclick="exibirQuiz(${novoID})"> Acessar Quizz </div>
             <div class="voltarParaHome" onclick="voltarParaHome()"> Voltar pra home </div>
     `;
     arrayQuizz = {
