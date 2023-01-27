@@ -195,8 +195,7 @@ function buscarQuizz(){
 function buscarQuizzFuncionou(buscarQquizzes){
     const quizzes = buscarQquizzes.data;
     quizzes.forEach(exibirTodosTela1);
-    if(arrayMeusQuizz.length === 0
-        ){
+    if(arrayMeusQuizz.length === 0 || arrayMeusQuizz === null ){
         meusQuizzesPreenchido.classList.add('escondido');
         meusQuizzesVazio.classList.remove('escondido');
     } else {
