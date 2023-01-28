@@ -35,6 +35,7 @@ if(lista!==null){
 }
 
 
+
 function erro(exibiErro){
     console.log("ERRO FOI DO TIPO " + exibiErro.response.status);
 }
