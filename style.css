@@ -133,7 +133,7 @@ h1{
 
 .descricaoQuizz{
     margin: 120px 20px 0 20px;
-    width: 300px;
+    width: 340px;
     height: 54px;
     position: absolute;
     top: 0;
@@ -145,7 +145,7 @@ h1{
     align-items: center;
     color: #FFFFFF;
     padding-right: 10px;
-    word-break: break-all;
+    word-break: normal;
 }
 
 .degrade{
@@ -453,11 +453,16 @@ button{
 
 .conteinerFim div{
     width: 100%;
+    margin: 0 auto;
+    margin-left: 15px;
 }
 
 .conteinerFim :last-child{
+    margin: 0 auto;
+    margin: 120px 0 0 15px;
     margin-top: 200px;
     padding-right: 10px;
+    font-size: 23px;
 }
 
 .proxPag{

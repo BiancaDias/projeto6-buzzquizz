@@ -1,5 +1,5 @@
 const primeiraTela = document.querySelector(".primeira-tela");
-let segundaTela = document.querySelector(".segunda-tela");
+const segundaTela = document.querySelector(".segunda-tela");
 const terceiraTela = document.querySelector(".terceira-tela");
 const meusQuizzesVazio = document.querySelector(".meusQuizzesVazio");
 const meusQuizzesPreenchido = document.querySelector(".meusQuizzesPreenchido");
@@ -22,13 +22,16 @@ let divAvo;
 let idQuizAtual;
 let novoID;
 let todosIds = [];
-
+const listaMeus = meusQuizzesPreenchido.querySelector(".listagemQuizz");
+const listaTodos = document.querySelector(".todosQuizzes .listagemQuizz");
+    
 buscarQuizz();
 
 // inicializo com o que já tem e quando crio um novo faco um push para atualizar
 const listaSerializada = localStorage.getItem("lista"); // Pegando de volta a string armazenada na chave "lista"
 const lista = JSON.parse(listaSerializada); // Transformando a string de volta na array original
 arrayMeusQuizz = lista;
+
 
 function erro(exibiErro){
     console.log("ERRO FOI DO TIPO " + exibiErro.response.status);
@@ -38,7 +41,7 @@ function exibirQuiz(id){
     pontuacao = 0;
     clique = 0;
     idQuizAtual = id;
-    console.log(idQuizAtual);
+    //console.log(idQuizAtual);
     const quiz = axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${id}`);
     quiz.then(exibirQuizFuncionou);
     quiz.catch(erro);
@@ -47,9 +50,9 @@ function exibirQuiz(id){
 function exibirQuizFuncionou(Carregarquiz){
     primeiraTela.classList.add('escondido');
     segundaTela.classList.remove('escondido');
+    terceiraTela.classList.add('escondido');
     quizExibido = Carregarquiz.data;
 
-    segundaTela = document.querySelector('.segunda-tela');
     segundaTela.innerHTML = "";
     let template = "";
     let alternativas = "";
@@ -81,11 +84,7 @@ function exibirQuizFuncionou(Carregarquiz){
         let alteraCor = segundaTela.lastChild;
         alteraCor.children[0].style.backgroundColor =quizExibido.questions[i].color;
     }
-
     //segundaTela.innerHTML = segundaTela.innerHTML + `</div>`;
-
-    
-
 }
 
 function comparador() { 
@@ -128,8 +127,8 @@ function cliqueNaAlternativa(alternativa){
 }
 
 function pontuacaoFinal(){
-    console.log("quantidade de perguntas " + quizExibido.questions.length);
-    console.log("quantidade de cliques " + clique);
+    //console.log("quantidade de perguntas " + quizExibido.questions.length);
+    //console.log("quantidade de cliques " + clique);
     let nivel;
     if(clique===quizExibido.questions.length){
         const resultado = (pontuacao * 100) / quizExibido.questions.length;
@@ -194,12 +193,13 @@ function buscarQuizz(){
 
 function buscarQuizzFuncionou(buscarQquizzes){
     const quizzes = buscarQquizzes.data;
+    listaTodos.innerHTML = "";
     quizzes.forEach(exibirTodosTela1);
-    if(arrayMeusQuizz.length === 0 || arrayMeusQuizz === null ){
-        meusQuizzesPreenchido.classList.add('escondido');
-        meusQuizzesVazio.classList.remove('escondido');
-    } else {
+    if(arrayMeusQuizz.length !== 0){
+        meusQuizzesPreenchido.classList.remove('escondido');
+        meusQuizzesVazio.classList.add('escondido');
         quizzesFiltrados = quizzes.filter(filtroQuizzes);
+        listaMeus.innerHTML = "";
         quizzesFiltrados.forEach(exibirMeusTela1);
     }
 }
@@ -213,8 +213,6 @@ function filtroQuizzes(todosQuizzes){
 }
 
 function exibirTodosTela1(quizzTelaEntrada){
-    const todosQuizzes = document.querySelector(".todosQuizzes");
-    const listaTodos = todosQuizzes.querySelector(".listagemQuizz");
     listaTodos.innerHTML += `
         <div class="exibicaoQuizz" onclick="exibirQuiz(${quizzTelaEntrada.id})">
             <img src = ${quizzTelaEntrada.image} alt="imagemquizz">
@@ -224,7 +222,7 @@ function exibirTodosTela1(quizzTelaEntrada){
 }
 
 function exibirMeusTela1(quizzTelaEntrada){
-    const listaMeus = meusQuizzesPreenchido.querySelector(".listagemQuizz");
+    
     if (arrayMeusQuizz[0] !== undefined){
     //montar a parte de pegar o numero salvo e exibir
         listaMeus.innerHTML += `
@@ -240,10 +238,10 @@ function criarProxPag(Pagina){
     const pagAtual = Pagina.parentNode;
     const pagClassList = pagAtual.classList[0];
     if (pagClassList == "tela-3-1"){
-        verificaTela31()
+        verificaTela31();
         if (verificadorTela31 === 1){
             proxPag = document.querySelector(".tela-3-2");
-            Tela32()
+            Tela32();
             pagAtual.classList.add('escondido');
             proxPag.classList.remove('escondido');
         }      
@@ -251,7 +249,7 @@ function criarProxPag(Pagina){
         verificaTela32()
         if (verificadorTela32 === 1){
             proxPag = document.querySelector(".tela-3-3");
-            Tela33()
+            Tela33();
             pagAtual.classList.add('escondido');
             proxPag.classList.remove('escondido');
         }
@@ -259,7 +257,6 @@ function criarProxPag(Pagina){
         verificaTela33()
         if (verificadorTela33 === 1){
             arrayQuizz = {title: nomeQuizz, image: imgQuizz, questions: arrayQuestoes, levels: arrayNiveis};
-            Tela34();
             enviarNovoQuizz();
         }
     } 
@@ -317,6 +314,8 @@ function expandirPergunta(pergunta){
 }
 
 function verificaTela32(){
+    arrayQuestoes = [];
+    arrayRespostas = [];
     if(document.querySelector(".Pergunta"+numPerg) === null){
         alert('Preencha os dados corretamente!');
     }
@@ -334,24 +333,24 @@ function verificaTela32(){
             const arrayRespostas = [{
                 text: itemParaValidar.children[4].value,
                 image: itemParaValidar.children[5].value,
-                isCorrectAnswer: "true"},
+                isCorrectAnswer: true},
                 {
                 text: itemParaValidar.children[7].value,
                 image: itemParaValidar.children[8].value,
-                isCorrectAnswer: "false"}];
+                isCorrectAnswer: false}];
             if (itemParaValidar.children[10].value !== "" && itemParaValidar.children[11].checkValidity() === true){
                 arrayRespostas.push({
                     text: itemParaValidar.children[10].value,
                     image: itemParaValidar.children[11].value,
-                    isCorrectAnswer: "false"});
+                    isCorrectAnswer: false});
             }
             if (itemParaValidar.children[13].value !== "" && itemParaValidar.children[14].checkValidity() === true){
                 arrayRespostas.push({
                     text: itemParaValidar.children[13].value,
                     image: itemParaValidar.children[14].value,
-                    isCorrectAnswer: "false"});
+                    isCorrectAnswer: false});
             }
-            arrayQuestoes.push({title:itemParaValidar.children[1].value, image:itemParaValidar.children[2].value, answers: arrayRespostas});
+            arrayQuestoes.push({title:itemParaValidar.children[1].value, color:itemParaValidar.children[2].value, answers: arrayRespostas});
         } else {
             verificadorTela32 = 0;    
         }
@@ -429,15 +428,17 @@ function enviarNovoQuizz(){
 }
 
 function enviarNovoQuizzFuncionou(certo){
-    pagAtual = document.querySelector(".tela-3-3");
-    proxPag = document.querySelector(".tela-3-4");
-    pagAtual.classList.add('escondido');
-    proxPag.classList.remove('escondido');
-
     novoID = (certo.data.id);
     arrayMeusQuizz.push(novoID);
     const arraySerializado = JSON.stringify(arrayMeusQuizz);
     localStorage.setItem("lista", arraySerializado);
+    
+    Tela34();
+
+    pagAtual = document.querySelector(".tela-3-3");
+    proxPag = document.querySelector(".tela-3-4");
+    pagAtual.classList.add('escondido');
+    proxPag.classList.remove('escondido');
 }
 
 function Tela34(){
@@ -448,7 +449,7 @@ function Tela34(){
             <div class="degrade"></div>
             <div class="descricaoQuizz">${nomeQuizz}</div>
         </div>
-        <div class="proxPag" onclick="exibirQuiz(${novoID})"> Acessar Quizz </div>
+        <div class="proxPag" onclick="exibirQuiz(${arrayMeusQuizz[arrayMeusQuizz.length-1]})"> Acessar Quizz </div>
             <div class="voltarParaHome" onclick="voltarParaHome()"> Voltar pra home </div>
     `;
 }
