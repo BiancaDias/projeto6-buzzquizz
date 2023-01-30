@@ -201,16 +201,12 @@ function buscarQuizzFuncionou(buscarQquizzes){
     if(arrayMeusQuizz.length !== 0){
         meusQuizzesPreenchido.classList.remove('escondido');
         meusQuizzesVazio.classList.add('escondido');
-        quizzesFiltrados = quizzes.filter(filtroQuizzes);
         listaMeus.innerHTML = "";
-        quizzesFiltrados.forEach(exibirMeusTela1);
-    }
-}
+        for (let j=0; j<arrayMeusQuizz.length; j++){
+            const promessaBuscaMeuQuizz = axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${arrayMeusQuizz[j]}`);
 
-function filtroQuizzes(todosQuizzes){
-    for (let i=0; i<arrayMeusQuizz.length; i++){
-        if (todosQuizzes.id === arrayMeusQuizz[i] ){ //vejo se está na lista local, se sim add 
-            return true;
+            promessaBuscaMeuQuizz.then(buscarMeuQuizzFuncionou);
+            promessaBuscaMeuQuizz.catch(erro);
         }
     }
 }
@@ -227,14 +223,22 @@ function exibirTodosTela1(quizzTelaEntrada){
 function exibirMeusTela1(quizzTelaEntrada){
     
     if (arrayMeusQuizz[0] !== undefined){
-    //montar a parte de pegar o numero salvo e exibir
-        listaMeus.innerHTML += `
-            <div class="exibicaoQuizz" onclick="exibirQuiz(${quizzTelaEntrada.id})">
-                <img src = ${quizzTelaEntrada.image} alt="imagemquizz">
-                <div class="degrade"></div>
-                <div class="descricaoQuizz">${quizzTelaEntrada.title}</div>
-            </div>`;
+
+        const promessaBuscaMeuQuizz = axios.get(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${quizzTelaEntrada.id}`);
+
+        promessaBuscaMeuQuizz.then(buscarMeuQuizzFuncionou);
+        promessaBuscaMeuQuizz.catch(erro);        
     }
+}
+
+function buscarMeuQuizzFuncionou(respostaMeuQuizz){
+    const data = respostaMeuQuizz.data;
+    listaMeus.innerHTML += `
+            <div class="exibicaoQuizz" onclick="exibirQuiz(${data.id})">
+                <img src = ${data.image} alt="imagemquizz">
+                <div class="degrade"></div>
+                <div class="descricaoQuizz">${data.title}</div>
+            </div>`;
 }
 
 function criarProxPag(Pagina){
@@ -435,7 +439,7 @@ function enviarNovoQuizzFuncionou(certo){
     arrayMeusQuizz.push(novoID);
     const arraySerializado = JSON.stringify(arrayMeusQuizz);
     localStorage.setItem("lista", arraySerializado);
-    
+
     Tela34();
 
     pagAtual = document.querySelector(".tela-3-3");
