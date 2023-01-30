@@ -99,6 +99,11 @@ h1{
     margin-bottom: 20px;
 }
 
+.icone{
+    width:26px;
+    height:23px;
+}
+
 .meusQuizzes ion-icon{
     font-size: 32px;
     color: #EC362D;
@@ -201,6 +206,7 @@ h2{
     flex-direction: column;
     align-items: center;
     margin-top: 42px;
+    word-break: break-all;
 }
 
 .pergunta{
@@ -248,6 +254,13 @@ h2{
     margin-top: 21px;
 }
 
+.resposta{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 330px;
+}
+
 .alternativas p{
     font-weight: 700;
     font-size: 20px;
@@ -291,10 +304,12 @@ h3{
 .acerto{
     background: #EC362D;
     width: 727px;
-    height: 99px;
+    min-height: 99px;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 16px;
+    white-space: pre-line;
 }
 .nivel img{
     width: 364px;
@@ -313,7 +328,14 @@ h3{
     line-height: 25px;
     color: #484848;
     width: 328px;
-    height: 250px;
+    /*0height: 250px;*/
+}
+
+.quizz{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .botoes{
@@ -537,8 +559,12 @@ button{
         margin: 15px 8px;
     }
     
-    .pergunta, .nivel, .quiz{
+    .quiz{
         width: 100% !important;
+    }
+
+    .pergunta, .nivel{
+        width: 375px;
     }
     .quiz{
         margin-top: 24px;
@@ -582,18 +608,18 @@ button{
     }
     .acerto{
         width: 340px;
-        height: 99px;
+        min-height: 99px;
     }
     .nivel{
         height: 500px;
-        justify-content: space-between;
+        
     }
     .expli-acertos{
         flex-direction: column;
         width: 340px;
         height: 360px;
         margin-top: 9px;
-
+        justify-content:flex-start;
     }
     .nivel img{
         width: 340px;
@@ -606,7 +632,6 @@ button{
         display: flex;
         align-items: center;
         margin-top: 9px;
-        height: 96px;
     }
     .reiniciar{
         width: 219.64px;
@@ -659,6 +684,13 @@ button{
     .conteinerFim :last-child{
         margin: 0 auto;
         margin: 60px 0 0 12px;
+    }
+    .icone{
+        max-width:26px;
+        max-height:23px;
+    }
+    .resposta{
+        width: 163px;
     }
 }
 

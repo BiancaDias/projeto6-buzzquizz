@@ -3,6 +3,7 @@ const segundaTela = document.querySelector(".segunda-tela");
 const terceiraTela = document.querySelector(".terceira-tela");
 const meusQuizzesVazio = document.querySelector(".meusQuizzesVazio");
 const meusQuizzesPreenchido = document.querySelector(".meusQuizzesPreenchido");
+const areaDoQuizz = document.querySelector(".quizz");
 let arrayQuizz;
 let arrayQuestoes = [];
 let arrayRespostas = [];
@@ -54,12 +55,13 @@ function exibirQuizFuncionou(Carregarquiz){
     primeiraTela.classList.add('escondido');
     segundaTela.classList.remove('escondido');
     terceiraTela.classList.add('escondido');
+    
     quizExibido = Carregarquiz.data;
 
-    segundaTela.innerHTML = "";
+    areaDoQuizz.innerHTML = "";
     let template = "";
     let alternativas = "";
-    segundaTela.innerHTML =`<div class="banner">
+    areaDoQuizz.innerHTML =`<div class="banner">
         <h2>${quizExibido.title}</h2>
         <img src = "${quizExibido.image}" class="portrait">
         <div class="filtro"></div>
@@ -83,8 +85,8 @@ function exibirQuizFuncionou(Carregarquiz){
             </div>`
             template= template + alternativas;
         }
-        segundaTela.innerHTML = segundaTela.innerHTML + template;
-        let alteraCor = segundaTela.lastChild;
+        areaDoQuizz.innerHTML = areaDoQuizz.innerHTML + template;
+        let alteraCor = areaDoQuizz.lastChild;
         alteraCor.children[0].style.backgroundColor =quizExibido.questions[i].color;
     }
     //segundaTela.innerHTML = segundaTela.innerHTML + `</div>`;
@@ -141,7 +143,7 @@ function pontuacaoFinal(){
             }
         }
 
-        segundaTela.innerHTML = segundaTela.innerHTML + `<div class="nivel">
+        areaDoQuizz.innerHTML = areaDoQuizz.innerHTML + `<div class="nivel">
         <div class="acerto">
             <h3>${Math.round(resultado)}% de acerto: ${nivel.title}</h3>
         </div>
@@ -152,7 +154,6 @@ function pontuacaoFinal(){
         </div>
         <div class="botoes">
             <button onclick="reiniciarQuiz()" class = "reiniciar">Reiniciar Quizz</button>
-            <button onclick="voltarParaHome()" class = "voltar">Voltar pra home</button>
         </div>
         </div>`
         
@@ -287,7 +288,7 @@ function Tela32(){
     for (let i = 1; i < numPerg+1; i++){
         pag.innerHTML += `
         <div class="conteinerCriacao reduzido">
-            <div class="subtitulos">Pergunta ${i} <ion-icon name="create-sharp" onclick="expandirPergunta(this)"></ion-icon></div>
+            <div class="subtitulos">Pergunta ${i} <img class="icone" src="imagens/edit.svg" onclick="expandirPergunta(this)"></div>
         </div>`;
     }
     pag.innerHTML += `
@@ -371,7 +372,7 @@ function Tela33(){
         console.log(i);
         pag.innerHTML += `
         <div class="conteinerCriacao reduzido">
-            <div class="subtitulos">Nível ${i} <ion-icon name="create-sharp" onclick="expandirNiveis(this)"></ion-icon></div>
+            <div class="subtitulos">Nível ${i} <img class="icone" src="imagens/edit.svg" onclick="expandirNiveis(this)"></div>
         </div>`;
     }
     pag.innerHTML += `
