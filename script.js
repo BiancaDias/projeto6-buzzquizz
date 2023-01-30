@@ -130,8 +130,6 @@ function cliqueNaAlternativa(alternativa){
 }
 
 function pontuacaoFinal(){
-    //console.log("quantidade de perguntas " + quizExibido.questions.length);
-    //console.log("quantidade de cliques " + clique);
     let nivel;
     if(clique===quizExibido.questions.length){
         const resultado = (pontuacao * 100) / quizExibido.questions.length;
